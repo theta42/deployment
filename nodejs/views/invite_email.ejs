@@ -1,0 +1,59 @@
+<%- include('top') %>
+<script type="text/javascript">
+
+
+	var emailSent = function(){
+		$('#email_card .card-body').html("<h1>Thank you!</h1><p>Check your mail</p>")
+	}
+
+	$(document).ready(function(){
+	});
+</script>
+
+<style type="text/css">
+	div.form-group:hover {
+		-ms-transform: scale(1.02);
+		-webkit-transform: scale(1.02);
+		transform: scale(1.02);
+	}
+</style>
+
+<div class="row">
+	<div id="email_card" class="card-deck">
+		<div class="shadow-lg card mb-3">
+			<div class="card-header">
+				Validate Email
+			</div>
+			<div class="card-header actionMessage" style="display:none">
+			</div>
+			<div class="card-body">
+				<p>
+					Invited By: <b><%= invite.created_by %></b>, <%= invite.created_on %>.
+				</p>
+				<p>
+					Please enter a valid email address. A link will be sent to
+					the supplied address to complete the registration process.
+				</p>
+				<p>
+					The supplied email will also be used as the linked email for
+					the new user.
+				</p>
+				<form action="auth/invite/<%= invite.token %>" onsubmit="formAJAX(this)" evalAJAX="emailSent()">
+					<div class="form-group">
+						<label class="control-label">Email</label>
+						<div class="input-group mb-3">
+						  <div class="input-group-prepend">
+							<span class="input-group-text" ><i class="fad fa-at"></i></span>
+						  </div>
+							<input type="email" name="mail" class="form-control" placeholder="jsmith@gmail.com" validate="email:3" />
+						</div>
+					</div>
+
+					<button type="submit" class="btn btn-outline-dark"><i class="fad fa-paper-plane"></i> Send It!</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	</div>
+</div>
+<%- include('bottom') %>

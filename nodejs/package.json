@@ -1,0 +1,33 @@
+{
+  "name": "t42-ldap-manager",
+  "version": "1.0.0",
+  "private": true,
+  "author": [
+    {
+      "name": "William Mantly",
+      "email": "wmantly@gmail.com"
+    }
+  ],
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "@sendgrid/mail": "^7.4.0",
+    "ejs": "^3.1.5",
+    "express": "~4.16.1",
+    "extend": "^3.0.2",
+    "ldapts": "^2.10.1",
+    "moment": "^2.29.1",
+    "mustache": "^4.1.0",
+    "redis": "^2.8.0",
+    "smtpc": "^0.1.2"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://git.theta42.com/wmantly/proxy.git"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}

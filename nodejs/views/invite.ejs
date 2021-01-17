@@ -1,0 +1,39 @@
+<%- include('top') %>
+<script type="text/javascript">
+	function tableAJAX(message){
+		app.util.actionMessage(message);
+	}
+
+	$(document).ready(function(){
+		$('form').attr('action', 'auth/invite/<%= invite.token %>/<%= invite.mail_token %>').attr('evalAJAX', 'location.replace("/login");')
+		$('[name="mail"').val('<%= invite.mail %>').prop("disabled", true);
+	});
+</script>
+
+<style type="text/css">
+	div.form-group:hover {
+	    -ms-transform: scale(1.02);
+	    -webkit-transform: scale(1.02);
+	    transform: scale(1.02);
+	}
+</style>
+
+<div class="row" style="display:none">
+		<div class="col-md-12">
+		<div class="card shadow-lg">
+			<div class="card-header">
+				Add new user
+			</div>
+			<div class="card-header actionMessage" style="display:none">
+			</div>
+			<div class="card-body">
+				<p>
+					Invited By: <b><%= invite.created_by %></b>, <%= invite.created_on %>
+				</p>
+				<%- include('user_form') %>
+
+			</div>
+		</div>
+	</div>
+</div>
+<%- include('bottom') %>
