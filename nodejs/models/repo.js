@@ -183,35 +183,35 @@ module.exports = {Repo, Environment, Deployment, Target};
 
 // 	// To ssh://git.theta42.com:2222/wmantly/static-test.git
 
-// 	let lxc_starting = await Target.add({
-// 		created_by: 'wmantly',
-// 		name: 'lxc_starting',
-// 		type: 'LXC',
-// 		settings: {
-// 			user:'virt-service',
-// 			host:'142.93.30.52',
-// 			keyPath:'/home/william/.ssh/id_rsa_virt-service'
-// 		}
-// 	});
+	let lxc_starting = await Target.add({
+		created_by: 'wmantly',
+		name: 'lxc_starting',
+		type: 'LXC',
+		settings: {
+			user:'virt-service',
+			host:'lxc-staging0.sfo2.do.datacominfra.net',
+			keyPath:'/home/william/.ssh/id_rsa_virt-service'
+		}
+	});
 
-// 	var repo = await Repo.add({
-// 		created_by: 'wmantly',
-// 		repo: 'wmantly/static-test',
-// 	})
+	var repo = await Repo.add({
+		created_by: 'wmantly',
+		repo: 'wmantly/static-test',
+	})
 
-// 	var environment = await Environment.add({
-// 		created_by: 'wmantly',
-// 		environment: 'staging',
-// 		branchMatch: '*',
-// 		repo: 'wmantly/static-test',
-// 		domain: 'test.dc.vm42.us',
-// 		target: 'lxc_starting'
-// 	})
+	var environment = await Environment.add({
+		created_by: 'wmantly',
+		environment: 'staging',
+		branchMatch: '*',
+		repo: 'wmantly/static-test',
+		domain: '*.dc.vm42.us',
+		target: 'lxc_starting'
+	})
 
 
 
-	let environment = await Environment.get('wmantly/static-test_staging')
-	await environment.update({'domain': '*.dc.vm42.us'})
+	// let environment = await Environment.get('wmantly/static-test_staging')
+	// await environment.update({'domain': '*.dc.vm42.us'})
 
 
 // 	// console.log(test)
