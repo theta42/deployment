@@ -1,141 +1,67 @@
 'use strict';
 
 const router = require('express').Router();
-const {User} = require('../models/user'); 
-const permission = require('../utils/permission');
+const {User} = require('../models/user');
+const {Auth, AuthToken} = require('../models/auth'); 
 
-router.get('/', async function(req, res, next){
+
+router.post('/login', async function(req, res, next){
 	try{
+		let auth = await Auth.login(req.body);
 		return res.json({
-			results:  await User[req.query.detail ? "listDetail" : "list"]()
+			login: true,
+			token: auth.token.token,
 		});
 	}catch(error){
 		next(error);
 	}
 });
 
-router.post('/', async function(req, res, next){
+router.all('/logout', async function(req, res, next){
 	try{
-		await permission.byGroup(req.user, ['app_sso_admin'])
-		
-		req.body.created_by = req.user.uid
-
-		return res.json({results: await User.add(req.body)});
-	}catch(error){
-		next(error);
-	}
-});
-
-router.delete('/:uid', async function(req, res, next){
-	try{
-		let user;
-
-		if(req.params.uid.toLowerCase() === req.user.uid.toLowerCase()){
-			user = req.user;	
-		}else{
-			user = await User.get(req.params.uid);
-			await permission.byGroup(req.user, ['app_sso_admin'])
+		if(req.user){
+			await req.user.logout();
 		}
 
-		return res.json({uid: req.params.uid, results: await user.remove()})
+		res.json({message: 'Bye'})
 	}catch(error){
 		next(error);
 	}
 });
 
-router.put('/:uid', async function(req, res, next){
+router.post('/invite/:token', async function(req, res, next) {
 	try{
-		let user;
-
-		if(req.params.uid.toLowerCase() === req.user.uid.toLowerCase()){
-			user = req.user;	
-		}else{
-			user = await User.get(req.params.uid);
-			await permission.byGroup(req.user, ['app_sso_admin'])
-		}
+		req.body.token = req.params.token;
+		let user = await User.addByInvite(req.body);
+		let token = await AuthToken.add(user);
 
 		return res.json({
-			results: await user.update(req.body),
-			message: `Updated ${req.params.uid} user`
-
-		});
-	}catch(error){
-		next(error);
-	}
-});
-
-router.get('/me', async function(req, res, next){
-	try{
-
-		return res.json(await User.get({uid: req.user.uid}));
-	}catch(error){
-		next(error);
-	}
-});
-
-router.put('/password', async function(req, res, next){
-	try{
-		return res.json({results: await req.user.setPassword(req.body)})
-	}catch(error){
-		next(error);
-	}
-});
-
-router.put('/:uid/password', async function(req, res, next){
-	try{
-		let user;
-
-		if(req.params.uid.toLowerCase() === req.user.uid.toLowerCase()){
-			user = req.user;	
-		}else{
-			user = await User.get(req.params.uid);
-			await permission.byGroup(req.user, ['app_sso_admin'])
-		}
-
-		return res.json({
-			results: await user.setPassword(req.body),
-			message: `User ${user.uid} password changed.`
-		});
-	}catch(error){
-		next(error);
-	}
-});
-
-router.post('/invite', async function(req, res, next){
-	try{
-		let token = await req.user.invite();
-
-		return res.json({token: token.token});
-	}catch(error){
-		next(error);
-	}
-});
-
-router.post('/key', async function(req, res, next){
-	try{
-		let added = await User.addSSHkey({
-			uid: req.user.uid,
-			key: req.body.key
-		});
-
-		return res.status(added === true ? 200 : 400).json({
-			message: added
+			user: user.username,
+			token: token.token
 		});
 
 	}catch(error){
 		next(error);
 	}
 
-});
-
-router.get('/:uid', async function(req, res, next){
-	try{
-		return res.json({
-			results:  await User.get(req.params.uid),
-		});
-	}catch(error){
-		next(error);
-	}
 });
 
 module.exports = router;
+
+/*
+	verify public ssh key
+*/
+// router.post('/verifykey', async function(req, res){
+// 	let key = req.body.key;
+
+// 	try{
+// 		return res.json({
+// 			info: await Users.verifyKey(key)
+// 		});
+// 	}catch(error){
+// 		return res.status(400).json({
+// 			message: 'Key is not a public key file!'
+// 		});
+// 	}
+	
+// });

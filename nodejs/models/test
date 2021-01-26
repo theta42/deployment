@@ -1,0 +1,55 @@
+var that
+class Base{
+	static add(){
+		
+	}
+	constructor(){
+
+	}
+
+	blah(){
+		that = this
+	}
+}
+
+class Ex extends Base{
+	static thingy = {a:1, b:2}
+	constructor(){
+		super()
+	}
+}
+
+
+
+
+
+Repo.byBranch = async function(repo){
+	let list = await Environment.list();
+	let out = [];
+	for(let key of list){
+		if(key.startsWith((repo || this.repo))) out.push(await Environment.get(key))
+	}
+
+	return out;
+}
+
+
+
+Environment.addDeployment = async function(data){
+	try{
+		data.repo = this.repo;
+		data.environment = this.environment;
+		data.id = UUID().split('-').reverse()[0]
+		data.repo_env = `${data.repo}_${data.environment}_${data.id}`
+		return await Deployment.__proto__.add.call(Environment, data);
+
+	}catch(error){
+		throw error;
+	}
+};
+
+
+
+
+module.exports = {Repo, Environment, Deployment, Target};
+*/

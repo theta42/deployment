@@ -12,15 +12,14 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "@sendgrid/mail": "^7.4.0",
+    "axios": "^0.21.1",
     "ejs": "^3.1.5",
     "express": "~4.16.1",
     "extend": "^3.0.2",
     "ldapts": "^2.10.1",
     "moment": "^2.29.1",
     "mustache": "^4.1.0",
-    "redis": "^2.8.0",
-    "smtpc": "^0.1.2"
+    "redis": "^2.8.0"
   },
   "license": "MIT",
   "repository": {

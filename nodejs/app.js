@@ -33,13 +33,12 @@ app.use('/', require('./routes/index'));
 
 // API routes for authentication. 
 app.use('/api/auth',  require('./routes/auth'));
+app.use('/api/git',  require('./routes/git_webhook.js'));
+
 
 // API routes for working with users. All endpoints need to be have valid user.
 app.use('/api/user', middleware.auth, require('./routes/user'));
 
-app.use('/api/token', middleware.auth, require('./routes/token'));
-
-app.use('/api/group', middleware.auth, require('./routes/group'));
 
 
 // Catch 404 and forward to error handler. If none of the above routes are
@@ -54,7 +53,7 @@ app.use(function(req, res, next) {
 // Error handler. This is where `next()` will go on error
 app.use(function(err, req, res, next) {
   console.error(err.status || res.status, err.name, req.method, req.url);
-  if(![401, 404].includes(err.status || res.status)){
+  if(![ 404].includes(err.status || res.status)){
     console.error(err.message);
     console.error(err.stack);
     console.error('=========================================');

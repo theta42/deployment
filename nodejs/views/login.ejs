@@ -16,7 +16,7 @@
 	<div class="card-deck">
 		<div class="shadow-lg card mb-3">
 			<div class="card-header shadow">
-				Password Log in
+				SSO Log in
 			</div>
 			<div class="card-header shadow actionMessage" style="display:none">
 			</div>
@@ -45,53 +45,6 @@
 					</div>
 
 					<button type="submit" class="btn btn-outline-dark"><i class="fad fa-sign-in"></i> Log in</button>
-				</form>
-			</div>
-		</div>
-		<div class="shadow-lg card border-danger mb-3">
-			<div class="card-header shadow">
-				Social Login
-			</div>
-			<div class="card-header shadow actionMessage" style="display:none">
-			</div>
-			<div class="card-body">
-				<h3>Coming soon!</h3>
-				<p>
-					<ul class="list-group">
-						<li class="list-group-item"><i class="fab fa-google"></i> Login with google OATH</li>
-						<li class="list-group-item"><i class="fab fa-github"></i> Login with github OATH</li>
-						<li class="list-group-item"><i class="fab fa-facebook"></i> Login with facebook OATH</li>
-					</ul>
-				</p>
-			</div>
-		</div>
-		<div class="shadow-lg card mb-3">
-			<div class="card-header shadow">
-				Password Reset
-			</div>
-			<div class="card-header shadow actionMessage" style="display:none">
-			</div>
-			<div class="card-body">
-				<p>
-					Forgot your password? Or your user name? No problem! Just
-					enter you email address below and if you are in our system,
-					we will email with the required information to get back up
-					and running!
-				</p>
-				<form action="auth/resetpassword" onsubmit="formAJAX(this)">
-					<input type="hidden" name="redirect" value="<%= redirect %>">
-
-					<div class="form-group">
-						<label class="control-label">Email</label>
-						<div class="input-group mb-3 shadow">
-						  <div class="input-group-prepend">
-						    <span class="input-group-text" ><i class="fad fa-at"></i></span>
-						  </div>
-							<input type="email" name="mail" class="form-control" placeholder="jsmith@gmail.com" validate="email:3" />
-						</div>
-					</div>
-
-					<button type="submit" class="btn btn-outline-dark"><i class="fad fa-question"></i> Help me!</button>
 				</form>
 			</div>
 		</div>
