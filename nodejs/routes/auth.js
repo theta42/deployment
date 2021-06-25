@@ -5,10 +5,11 @@ const {User} = require('../models/user');
 const {Auth, AuthToken} = require('../models/auth'); 
 
 
+
+
 router.post('/login', async function(req, res, next){
 	try{
 		let auth = await Auth.login(req.body);
-		console.log('auth route', auth)
 		return res.json({
 			login: true,
 			token: auth.token.token,

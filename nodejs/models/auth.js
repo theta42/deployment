@@ -35,6 +35,7 @@ Auth.checkToken = async function(data){
 			return await User.get(token.created_by);
 		}
 	}catch(error){
+		console.log('token error', data)
 		throw this.errors.login();
 	}
 };

@@ -14,6 +14,10 @@ class Table{
 	static async get(index){
 		try{
 
+			if(typeof index === 'object'){
+				index = index[this._key]
+			}
+
 			let result = await client.HGETALL(`${this.prototype.constructor.name}_${index}`);
 
 			if(!result){

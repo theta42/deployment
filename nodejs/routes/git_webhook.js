@@ -5,6 +5,9 @@ const {doDeploy} = require('../lib/deploy');
 
 router.all('/', async function(req, res, next) {
 	try{
+
+		console.log(req.body)
+
 		var event = req.headers['x-github-event'];
 		var call = (req.body.created && 'create') || 
 			(req.body.deleted && 'delete') || 
@@ -15,7 +18,7 @@ router.all('/', async function(req, res, next) {
 		var commit = req.body.after;
 		let repo   = req.body.repository.full_name;
 
-		let id = await doDeploy('create', repo, branch, sshURL, commit);
+		// let id = await doDeploy('create', repo, branch, sshURL, commit);
 		
 		res.json({id});
 

@@ -3,7 +3,7 @@ const extend = require('extend');
 const axios = require('axios')
 const {Repo, Environment, Deployment, Target} = require('../models/repo');
 const deployTargets = require('./lxc');
-const conf = require('../conf/conf')
+const conf = require('../conf/conf');
 
 async function doDeploy(action, repo, branch, repoSshurl, commit){
 	var deployment;
@@ -83,6 +83,7 @@ class Depoy{
 	}
 
 	async event(name, data){
+		
 		console.log(`EVENT: ${name}`, data)
 	}
 
@@ -137,6 +138,10 @@ class Depoy{
 	async update(){
 		await this.exec(`
 			cd ${this.settings.workingPath};
+			git config --global user.email "you@example.com"
+  			git config --global user.name "Your Name"
+  			git stash
+
 			export GIT_SSH_COMMAND="/usr/bin/ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa_deploy_key"
 			git pull origin master;
 			./${this.settings.scriptsPath}/${this.environment.environment}/update.sh
@@ -237,15 +242,17 @@ module.exports = {doDeploy};
 	// for(let d of deployments){
 	// 	try{
 	// 		let lxc = new deployTargets.LXC({...{name: d.repo_env_id.replace('/', '_')}, ...d.target.settings})
-	// 		await lxc.destroy();
-	// 		await d.remove()
+	// 		console.log('deployment', d)
+	// 		// await lxc.destroy();
+	// 		console.log(await d.remove());
 
 	// 	}catch(error){
 	// 		console.log('err', error)
 	// 	}finally{
-	// 		await d.remove()
+	// 		await d.remove();
 	// 	}
 	// }
+
 
 }catch(error){
 	console.error('IIFE error:', error)

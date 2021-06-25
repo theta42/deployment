@@ -109,7 +109,6 @@ class Environment extends Table{
 		'lastCommit': {default:"__NONE__", isRequired: false, type: 'string'},
 		'workingPath': {default: '/opt/datacom', type: 'string'},
 		'domain': {isRequired: true, type: 'string'},
-
 	}
 
 	static async add(data){
@@ -183,30 +182,30 @@ module.exports = {Repo, Environment, Deployment, Target};
 
 // 	// To ssh://git.theta42.com:2222/wmantly/static-test.git
 
-	let lxc_starting = await Target.add({
-		created_by: 'wmantly',
-		name: 'lxc_starting',
-		type: 'LXC',
-		settings: {
-			user:'virt-service',
-			host:'lxc-staging0.sfo2.do.datacominfra.net',
-			keyPath:'/home/william/.ssh/id_rsa_virt-service'
-		}
-	});
+	// let lxc_staging = await Target.add({
+	// 	created_by: 'wmantly',
+	// 	name: 'lxc_staging',
+	// 	type: 'LXC',
+	// 	settings: {
+	// 		user:'virt-service',
+	// 		host:'lxc-staging0.sfo2.do.datacominfra.net',
+	// 		keyPath:'/home/william/.ssh/id_rsa_virt-service'
+	// 	}
+	// });
 
-	var repo = await Repo.add({
-		created_by: 'wmantly',
-		repo: 'wmantly/static-test',
-	})
+	// var repo = await Repo.add({
+	// 	created_by: 'wmantly',
+	// 	repo: 'wmantly/static-test',
+	// })
 
-	var environment = await Environment.add({
-		created_by: 'wmantly',
-		environment: 'staging',
-		branchMatch: '*',
-		repo: 'wmantly/static-test',
-		domain: '*.dc.vm42.us',
-		target: 'lxc_starting'
-	})
+	// var environment = await Environment.add({
+	// 	created_by: 'wmantly',
+	// 	environment: 'staging',
+	// 	branchMatch: '*',
+	// 	repo: 'wmantly/static-test',
+	// 	domain: '*.dc.vm42.us',
+	// 	target: 'lxc_staging'
+	// })
 
 
 
@@ -214,20 +213,20 @@ module.exports = {Repo, Environment, Deployment, Target};
 	// await environment.update({'domain': '*.dc.vm42.us'})
 
 
-// 	// console.log(test)
+	// console.log(test)
 
 
-// 	// console.log(await Environment.listDetail())
-// 	// let repo = await Repo.get('wmantly/test2')
-// 	// console.log(repo)
-// 	// repo.update({hookCallCount: 5});
-// 	// let envs = await repo.getEnvironments();
-// 	// let env = await repo.getEnvironmentsbyBranch('staging');
-// 	// let deployment = await env.addDeployment()
-// 	// console.log('deployment', deployment)
-// 	// let deployments = await repo.getDeploymentsbyBranch('staging')
-// 	// console.log('deployments', deployments)
-// 	// console.log('deployments', await Deployment.listDetail())
+	// console.log(await Environment.listDetail())
+	// let repo = await Repo.get('wmantly/static-test')
+	// console.log(repo)
+	// repo.update({hookCallCount: 5});
+	// let envs = await repo.getEnvironments();
+	// let env = await repo.getEnvironmentsbyBranch('staging');
+	// let deployment = await env.addDeployment()
+	// console.log('deployment', deployment)
+	// let deployments = await repo.getDeploymentsbyBranch('staging')
+	// console.log('deployments', deployments)
+	// console.log('deployments', await Deployment.listDetail())
 
 
 
@@ -251,6 +250,7 @@ module.exports = {Repo, Environment, Deployment, Target};
 
 	// console.log('deployments', deployment)
 
+	// console.log(await Repo.listDetail())
 
 // 	return 0;
 }catch(error){
